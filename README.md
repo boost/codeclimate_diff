@@ -1,8 +1,11 @@
 # CodeclimateDiff
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/codeclimate_diff`. To experiment with that code, run `bin/console` for an interactive prompt.
+This tool lets you see how your branch is affecting the code quality (what issues you've added, fixed, and what issues are outstanding in the files you've touched.)
 
-TODO: Delete this and the text above, and describe your gem
+It covers 3 kinds of code quality metrics (code smells, cyclomatic complexity, and similar code).
+
+NOTE: similar code will only work correctly if you run a diff on all the files in your branch.
+
 
 ## Installation
 

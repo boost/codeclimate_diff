@@ -71,7 +71,7 @@ TODO: Delete this and the text above, and describe your gem
 4. Run the baseline and commit the result to the repo
 
     ```
-    ./codeclimate_diff --baseline
+    ./bin/codeclimate_diff --baseline
     ```
 
 ## Usage
@@ -84,17 +84,17 @@ TODO: Delete this and the text above, and describe your gem
 
     ```
     # runs on all code files changed in your branch
-    ./codeclimate_diff
+    ./bin/codeclimate_diff
 
     OR
 
     # filters the changed files in your branch futher
-    ./codeclimate_diff --pattern places
+    ./bin/codeclimate_diff --pattern places
 
     OR
 
     # only shows the new and fixed issues
-    ./codeclimate_diff --new-only
+    ./bin/codeclimate_diff --new-only
     ```
 4. Now you have time to fix the issues yay!
 

@@ -6,23 +6,97 @@ TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
-Add this line to your application's Gemfile:
+1. Install the codeclimate cli:
+      ``` 
+      brew tap codeclimate/formulae
+      brew install codeclimate
+      ```
 
-```ruby
-gem 'codeclimate_diff'
-```
+2. Add a `.codeclimate.yml` config file eg:
+      ```
+      ---
+      version: "2"
+      plugins:
+        rubocop:
+          enabled: true
+          channel: rubocop-1-36-0
+        reek:
+          enabled: true
 
-And then execute:
+      exclude_patterns:
+        - config/
+        - db/
+        - dist/
+        - features/
+        - public/
+        - "**/node_modules/"
+        - script/
+        - "**/spec/"
+        - "**/test/"
+        - "**/tests/"
+        - Tests/
+        - "**/vendor/"
+        - "**/*_test.go"
+        - "**/*.d.ts"
+        - "**/*.min.js"
+        - "**/*.min.css"
+        - "**/__tests__/"
+        - "**/__mocks__/"
+        - "/.gitlab/"
+        - coverage/
+      ```
 
+3. Install the gem
+
+    Add this line to your application's Gemfile:
+
+    ```ruby
+    gem 'codeclimate_diff'
+    ```
+
+    Install the gem:
+
+    ```bash
     $ bundle install
 
-Or install it yourself as:
-
+    # OR just install it locally
     $ gem install codeclimate_diff
+    ```
+
+    Then generate the executable:
+
+        $ bundle binstubs codeclimate_diff
+
+
+4. Run the baseline and commit the result to the repo
+
+    ```
+    ./codeclimate_diff --baseline
+    ```
 
 ## Usage
 
-TODO: Write usage instructions here
+1. Create a feature branch for your work, and reset the baseline + commit (5 mins)
+
+2. Do some work
+
+3. Check if you've added any issues (about 10 secs per code file changed on your branch)
+
+    ```
+    # runs on all code files changed in your branch
+    ./codeclimate_diff
+
+    OR
+
+    # filters the changed files in your branch futher
+    ./codeclimate_diff --pattern places
+
+    OR
+
+    # only shows the new and fixed issues
+    ./codeclimate_diff --new-only
+    ```
+4. Now you have time to fix the issues yay!
 
 ## Development
 

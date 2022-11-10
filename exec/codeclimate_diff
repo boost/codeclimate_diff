@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift("#{__dir__}/../lib")
+
+require "optparse"
+require "codeclimate_diff"
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: codeclimate_diff [options]"
+
+  opts.on("-b", "--baseline", "Means it will regenerate the baseline.")
+
+  opts.on("-n", "--new-only",
+          "It will only show what you have changed and not existing issues in files you have touched.")
+
+  opts.on("-pPATTERN", "--pattern=PATTERN",
+          "Grep pattern to filter files.  If provided, will filter the files changed on your branch further.")
+end.parse!(into: options)
+
+if options[:baseline]
+  CodeclimateDiff.generate_baseline
+elsif options[:"new-only"]
+  CodeclimateDiff.run_diff_on_branch(options[:pattern], show_preexisting: false)
+else
+  CodeclimateDiff.run_diff_on_branch(options[:pattern], show_preexisting: true)
+end

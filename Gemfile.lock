@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     codeclimate_diff (0.1.2)
+      colorize
       json
       optparse
       rest-client

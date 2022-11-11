@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "rest-client"
-require "pry"
 
 module CodeclimateDiff
   class Downloader

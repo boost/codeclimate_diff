@@ -11,7 +11,8 @@ module CodeclimateDiff
   class Runner
     def self.calculate_changed_filenames(pattern)
       extra_grep_filter = pattern ? " | grep '#{pattern}'" : ""
-      files_changed = `git diff --name-only main | grep --invert-match spec/ | grep --extended-regexp '.js$|.rb$'#{extra_grep_filter}`
+      branch_name = CodeclimateDiff.configuration["gitlab"]["main_branch_name"]
+      files_changed = `git diff --name-only #{branch_name} | grep --invert-match spec/ | grep --extended-regexp '.js$|.rb$'#{extra_grep_filter}`
       files_changed.split("\n")
     end
 

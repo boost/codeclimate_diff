@@ -26,10 +26,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Uncomment to register a new dependency of your gem
+  spec.add_dependency("colorize")
   spec.add_dependency("json")
   spec.add_dependency("optparse")
   spec.add_dependency("rest-client")
-  spec.add_dependency("colorize")
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

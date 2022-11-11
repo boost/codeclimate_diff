@@ -5,6 +5,7 @@ require "colorize"
 require_relative "./codeclimate_wrapper"
 require_relative "./result_printer"
 require_relative "./issue_sorter"
+require_relative "./downloader"
 
 module CodeclimateDiff
   class Runner
@@ -33,6 +34,8 @@ module CodeclimateDiff
     end
 
     def self.calculate_preexisting_issues_in_changed_files(changed_filenames)
+      Downloader.refresh_baseline_if_configured
+
       puts "Extracting relevant preexisting issues..."
       all_issues = JSON.parse(File.read("./codeclimate_diff_baseline.json"))
 

@@ -8,6 +8,7 @@ module CodeclimateDiff
     def initialize
       @gitlab = {
         main_branch_name: "main",
+        download_baseline_from_pipeline: false,
         project_id: nil,
         host: nil,
         personal_access_token: nil

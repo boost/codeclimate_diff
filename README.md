@@ -101,6 +101,21 @@ NOTE: similar code will only work correctly if you run a diff on all the files i
     ```
 4. Now you have time to fix the issues yay!
 
+## Configuration
+
+Example: 
+
+```rb
+CodeclimateDiff.configure do |config|
+  config.gitlab = {
+    main_branch_name: "main", # Required. Defaults to "main"
+    project_id: 123, # Required. Gitlab's Project ID. Defaults nil.
+    host: "https://org.gitlab.org", # Required. Gitlab's Host. e.g. https://org.gitlab.org. Defaults nil.
+    personal_access_token: ENV["GITLAB_PERSONAL_ACCESS_TOKEN"] # Required. Your personal access token. Defaults nil.
+  }
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

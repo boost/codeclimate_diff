@@ -113,6 +113,10 @@ CodeclimateDiff.configure do |config|
     host: "https://org.gitlab.org", # Required. Gitlab's Host. e.g. https://org.gitlab.org. Defaults nil.
     personal_access_token: ENV["GITLAB_PERSONAL_ACCESS_TOKEN"] # Required. Your personal access token. Defaults nil.
   }
+
+  config.github = {
+    # TODO: Add GitHub requirements
+  }
 end
 ```
 

@@ -11,6 +11,10 @@ module CodeclimateDiff
         host: nil,
         personal_access_token: nil
       }
+
+      @github = {
+        # TODO: Add GitHub requirements
+      }
     end
   end
 end

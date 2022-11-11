@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    codeclimate_diff (0.1.1)
+    codeclimate_diff (0.1.2)
       json
       optparse
       rest-client

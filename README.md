@@ -105,19 +105,15 @@ NOTE: similar code will only work correctly if you run a diff on all the files i
 
 Example: 
 
-```rb
-CodeclimateDiff.configure do |config|
-  config.gitlab = {
-    main_branch_name: "main", # Required. Defaults to "main"
-    project_id: 123, # Required. Gitlab's Project ID. Defaults nil.
-    host: "https://org.gitlab.org", # Required. Gitlab's Host. e.g. https://org.gitlab.org. Defaults nil.
-    personal_access_token: ENV["GITLAB_PERSONAL_ACCESS_TOKEN"] # Required. Your personal access token. Defaults nil.
-  }
+.codeclimate_diff.yml
 
-  config.github = {
-    # TODO: Add GitHub requirements
-  }
-end
+```rb
+gitlab:
+  main_branch_name: main
+  download_baseline_for_pipeline: true
+  project_id: '..'
+  host: https://gitlab.digitalnz.org/
+  personal_access_token: <LOAD FROM ENV VARIABLE>
 ```
 
 ## Development

@@ -4,7 +4,7 @@
 $LOAD_PATH.unshift("#{__dir__}/../lib")
 
 require "optparse"
-require "codeclimate_diff"
+require "codeclimate_diff/runner"
 
 options = {}
 OptionParser.new do |opts|
@@ -20,9 +20,9 @@ OptionParser.new do |opts|
 end.parse!(into: options)
 
 if options[:baseline]
-  CodeclimateDiff.generate_baseline
+  CodeclimateDiff::Runner.generate_baseline
 elsif options[:"new-only"]
-  CodeclimateDiff.run_diff_on_branch(options[:pattern], show_preexisting: false)
+  CodeclimateDiff::Runner.run_diff_on_branch(options[:pattern], show_preexisting: false)
 else
-  CodeclimateDiff.run_diff_on_branch(options[:pattern], show_preexisting: true)
+  CodeclimateDiff::Runner.run_diff_on_branch(options[:pattern], show_preexisting: true)
 end

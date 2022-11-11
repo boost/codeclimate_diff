@@ -2,7 +2,8 @@
 
 module CodeclimateDiff
   class Configuration
-    attr_accessor :gitlab
+    attr_accessor :gitlab,
+                  :github
 
     def initialize
       @gitlab = {

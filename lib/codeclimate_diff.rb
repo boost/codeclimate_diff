@@ -3,5 +3,4 @@
 require_relative "codeclimate_diff/version"
 
 module CodeclimateDiff
-  
 end

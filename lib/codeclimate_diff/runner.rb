@@ -2,12 +2,14 @@
 
 require "json"
 require "colorize"
+require_relative "./codeclimate_wrapper"
 
 module CodeclimateDiff
   class Runner
     def self.generate_baseline
       puts "Generating the baseline.  Should take about 5 minutes..."
-      `codeclimate analyze -f json > codeclimate_diff_baseline.json`
+      result = CodeclimateWrapper.new.run_codeclimate
+      File.write("codeclimate_diff_baseline.json", result)
       puts "Done!"
     end
 
@@ -24,7 +26,7 @@ module CodeclimateDiff
         next if filename == "codeclimate_diff.rb" # TODO: fix this file's code quality issues when we make a Gem!
 
         puts "Analysing '#{filename}'..."
-        result = `codeclimate analyze -f json #{filename}`
+        result = CodeclimateWrapper.new.run_codeclimate(filename)
         JSON.parse(result).each do |issue|
           next if issue["type"] != "issue"
 

@@ -5,6 +5,7 @@ $LOAD_PATH.unshift("#{__dir__}/../lib")
 
 require "optparse"
 require "codeclimate_diff/runner"
+require "codeclimate_diff"
 
 options = {}
 OptionParser.new do |opts|

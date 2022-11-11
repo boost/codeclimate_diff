@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 require "rest-client"
+require "pry"
 
 module CodeclimateDiff
   class Downloader
+
     def self.refresh_baseline_if_configured
       should_download = CodeclimateDiff.configuration.gitlab[:download_baseline_from_pipeline]
       return unless should_download

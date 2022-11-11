@@ -2,12 +2,20 @@
 
 module CodeclimateDiff
   class Configuration
-    attr_accessor :main_branch_name
+    attr_accessor :gitlab,
+                  :github
 
-    # using_gitlab: true
+    def initialize
+      @gitlab = {
+        main_branch_name: "main",
+        project_id: nil,
+        host: nil,
+        personal_access_token: nil
+      }
 
-    # gitlab host
-
-    # project id
+      @github = {
+        # TODO: Add GitHub requirements
+      }
+    end
   end
 end

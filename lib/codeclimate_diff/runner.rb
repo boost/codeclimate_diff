@@ -12,8 +12,10 @@ module CodeclimateDiff
     def self.calculate_changed_filenames(pattern)
       extra_grep_filter = pattern ? " | grep '#{pattern}'" : ""
       branch_name = CodeclimateDiff.configuration["gitlab"]["main_branch_name"]
-      files_changed = `git diff --name-only #{branch_name} | grep --invert-match spec/ | grep --extended-regexp '.js$|.rb$'#{extra_grep_filter}`
-      files_changed.split("\n")
+      files_changed_str = `git diff --name-only #{branch_name} | grep --invert-match spec/ | grep --extended-regexp '.js$|.rb$'#{extra_grep_filter}`
+      puts "Files changed on branch: #{files_changed_str}"
+
+      files_changed_str.split("\n")
     end
 
     def self.calculate_issues_in_changed_files(changed_filenames)

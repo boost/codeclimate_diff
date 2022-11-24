@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency("colorize")
   spec.add_dependency("json")
   spec.add_dependency("optparse")
+  spec.add_dependency("pry-byebug")
   spec.add_dependency("rest-client")
 
   # For more information and examples about making a new gem, check out our

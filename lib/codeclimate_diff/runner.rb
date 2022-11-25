@@ -13,8 +13,6 @@ module CodeclimateDiff
       extra_grep_filter = pattern ? " | grep '#{pattern}'" : ""
       branch_name = CodeclimateDiff.configuration["main_branch_name"] || "main"
       files_changed_str = `git diff --name-only #{branch_name} | grep --invert-match spec/ | grep --extended-regexp '.js$|.rb$'#{extra_grep_filter}`
-      puts "Files changed on branch: #{files_changed_str}"
-
       files_changed_str.split("\n")
     end
 
@@ -46,6 +44,8 @@ module CodeclimateDiff
     end
 
     def self.generate_baseline
+      CodeclimateWrapper.new.pull_latest_image
+
       puts "Generating the baseline.  Should take about 5 minutes..."
       result = CodeclimateWrapper.new.run_codeclimate
       File.write("codeclimate_diff_baseline.json", result)
@@ -53,6 +53,8 @@ module CodeclimateDiff
     end
 
     def self.run_diff_on_branch(pattern, show_preexisting: true)
+      CodeclimateWrapper.new.pull_latest_image
+
       changed_filenames = calculate_changed_filenames(pattern)
 
       changed_file_issues = calculate_issues_in_changed_files(changed_filenames)

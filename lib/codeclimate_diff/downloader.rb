@@ -5,11 +5,11 @@ require "rest-client"
 module CodeclimateDiff
   class Downloader
     def self.refresh_baseline_if_configured
-      should_download = CodeclimateDiff.configuration["gitlab"]["download_baseline_for_pipeline"]
-      return unless should_download
+      return unless CodeclimateDiff.configuration["gitlab"]
+      return unless CodeclimateDiff.configuration["gitlab"]["download_baseline_from_pipeline"]
 
       puts "Downloading baseline file from gitlab"
-      branch_name = CodeclimateDiff.configuration["main_branch_name"]
+      branch_name = CodeclimateDiff.configuration["main_branch_name"] || "main"
       project_id = CodeclimateDiff.configuration["gitlab"]["project_id"]
       host = CodeclimateDiff.configuration["gitlab"]["host"]
       baseline_filename = CodeclimateDiff.configuration["gitlab"]["baseline_filename"]

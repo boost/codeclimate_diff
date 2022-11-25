@@ -1,10 +1,8 @@
 # CodeclimateDiff
 
-This tool lets you see how your branch is affecting the code quality (what issues you've added, fixed, and what issues are outstanding in the files you've touched.)
+This tool lets you see how changes in your branch will affect the code quality (what issues you've added, fixed, and what issues are outstanding in the files you've touched that could be fixed while you're in the area.)
 
-It covers 3 kinds of code quality metrics (code smells, cyclomatic complexity, and similar code).
-
-NOTE: similar code will only work correctly if you run a diff on all the files in your branch.
+It runs the https://hub.docker.com/r/codeclimate/codeclimate docker image under the hood, which pays attention to all the normal Code Climate configurations.
 
 
 ## Initial setup
@@ -140,6 +138,7 @@ NOTE: similar code will only work correctly if you run a diff on all the files i
     OR
 
     # always analyzes all files rather than the changed files one by one, even if below the 'threshold_to_run_on_all_files' setting.
+    # NOTE: similar code issues will only work 100% correctly if you use this setting (otherwise it might miss a similarity with a file you didn't change and think you fixed it)
     ./bin/codeclimate_diff --all
     ```
 
@@ -178,7 +177,7 @@ With a few tweaks to your CI configuration, we can pull down the main build base
 
 3. Create a personal access token with `read_api` access and save it in the `CODECLIMATE_DIFF_GITLAB_PERSONAL_ACCESS_TOKEN` env variable
 
-Now when you run it on the changed files in your branch, it will refresh the baseline first!
+Now when you run it on the changed files in your branch, it will download the latest baseline first!
 
 ## Development
 

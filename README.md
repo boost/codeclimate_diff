@@ -9,11 +9,7 @@ NOTE: similar code will only work correctly if you run a diff on all the files i
 
 ## Installation
 
-1. Install the codeclimate cli:
-      ```bash
-      brew tap codeclimate/formulae
-      brew install codeclimate
-      ```
+1. Make sure docker is installed and running
 
 2. Add a `.codeclimate.yml` config file eg:
       ```yml
@@ -90,7 +86,7 @@ NOTE: similar code will only work correctly if you run a diff on all the files i
 
 4. Add a `.codecimate_diff.yml` configuration file
       ```
-      main_branch_name: main # defaults to main
+      main_branch_name: master # defaults to main
       ```
 
 5. Install the gem

@@ -46,10 +46,62 @@ NOTE: similar code will only work correctly if you run a diff on all the files i
         - "**/__tests__/"
         - "**/__mocks__/"
         - "/.gitlab/"
-        - coverage/
+        - coverage/ . # simple cov
       ```
 
-3. Install the gem
+3. Add a `.reek.yml` config file eg:
+
+      See https://github.com/troessner/reek#working-with-rails 
+      ```
+      detectors:
+        IrresponsibleModule:
+          enabled: false
+
+        LongParameterList:
+          max_params: 4  # defaults to 3.  You want this number realistic but stretchy so we can move it down
+
+        TooManyStatements:
+          max_statements: 10  # defaults to 5.  You want this number realistic but stretchy so we can move it down
+
+      directories:
+        "app/controllers":
+          IrresponsibleModule:
+            enabled: false
+          NestedIterators:
+            max_allowed_nesting: 2
+          UnusedPrivateMethod:
+            enabled: false
+          InstanceVariableAssumption:
+            enabled: false
+        "app/helpers":
+          IrresponsibleModule:
+            enabled: false
+          UtilityFunction:
+            enabled: false
+          FeatureEnvy:
+            enabled: false
+        "app/mailers":
+          InstanceVariableAssumption:
+            enabled: false
+        "app/models":
+          InstanceVariableAssumption:
+            enabled: false
+      ```
+
+4. Add a `.codecimate_diff.yml` configuration file
+      ```
+      main_branch_name: main
+
+      # settings to pull down the baseline from the pipeline in Gitlab before checking your branch
+      gitlab:
+        download_baseline_from_pipeline: true   # If false or excluded, you will need to generate the baseline manually
+        project_id: '85'
+        host: https://gitlab.digitalnz.org/
+        baseline_filename: 'gl-code-quality-report.json'
+      ```
+
+
+4. Install the gem
 
     Add this line to your application's Gemfile:
 
@@ -83,7 +135,7 @@ NOTE: similar code will only work correctly if you run a diff on all the files i
 
 2. Do some work
 
-3. Check if you've added any issues (about 10 secs per code file changed on your branch)
+3. Check if you've added any issues (about 10 secs per code file changed on your branch):
 
     ```
     # runs on all code files changed in your branch
@@ -100,21 +152,6 @@ NOTE: similar code will only work correctly if you run a diff on all the files i
     ./bin/codeclimate_diff --new-only
     ```
 4. Now you have time to fix the issues yay!
-
-## Configuration
-
-Example: 
-
-.codeclimate_diff.yml
-
-```rb
-gitlab:
-  main_branch_name: main
-  download_baseline_for_pipeline: true
-  project_id: '..'
-  host: https://gitlab.digitalnz.org/
-  personal_access_token: <LOAD FROM ENV VARIABLE>
-```
 
 ## Development
 

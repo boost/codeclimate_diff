@@ -7,7 +7,7 @@ It covers 3 kinds of code quality metrics (code smells, cyclomatic complexity, a
 NOTE: similar code will only work correctly if you run a diff on all the files in your branch.
 
 
-## Installation
+## Initial setup
 
 1. Make sure docker is installed and running
 

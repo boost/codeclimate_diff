@@ -9,7 +9,7 @@ module CodeclimateDiff
       return unless CodeclimateDiff.configuration["gitlab"]["download_baseline_from_pipeline"]
 
       puts "Downloading baseline file from gitlab"
-      branch_name = CodeclimateDiff.configuration["main_branch_name"]
+      branch_name = CodeclimateDiff.configuration["main_branch_name"] || "main"
       project_id = CodeclimateDiff.configuration["gitlab"]["project_id"]
       host = CodeclimateDiff.configuration["gitlab"]["host"]
       baseline_filename = CodeclimateDiff.configuration["gitlab"]["baseline_filename"]

@@ -87,6 +87,7 @@ NOTE: similar code will only work correctly if you run a diff on all the files i
 4. Add a `.codecimate_diff.yml` configuration file
       ```
       main_branch_name: master # defaults to main
+      threshold_to_run_on_all_files: 8  # when you reach a certain number of files changed, it becomes faster to analyze all files rather than analyze them one by one.
       ```
 
 5. Install the gem
@@ -123,18 +124,23 @@ NOTE: similar code will only work correctly if you run a diff on all the files i
 3. Check if you've added any issues (about 10 secs per code file changed on your branch):
 
     ```bash
-    # runs on all code files changed in your branch
+    # runs on each file changed in your branch (about 10 secs per code file changed on your branch)
     ./bin/codeclimate_diff
 
     OR
 
-    # filters the changed files in your branch futher
+    # filters the changed files in your branch futher by a grep pattern
     ./bin/codeclimate_diff --pattern places
 
     OR
 
     # only shows the new and fixed issues
     ./bin/codeclimate_diff --new-only
+
+    OR
+
+    # always analyzes all files rather than the changed files one by one, even if below the 'threshold_to_run_on_all_files' setting.
+    ./bin/codeclimate_diff --all
     ```
 
 4. Now you have time to fix the issues, horray!

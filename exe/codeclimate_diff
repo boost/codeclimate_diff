@@ -16,6 +16,9 @@ OptionParser.new do |opts|
   opts.on("-n", "--new-only",
           "It will only show what you have changed and not existing issues in files you have touched.")
 
+  opts.on("-a", "--all",
+          "It will always analyze all files, and not the changed files one by one, even if below the 'threshold_to_run_on_all_files' setting.")
+
   opts.on("-pPATTERN", "--pattern=PATTERN",
           "Grep pattern to filter files.  If provided, will filter the files changed on your branch further.")
 end.parse!(into: options)
@@ -23,7 +26,7 @@ end.parse!(into: options)
 if options[:baseline]
   CodeclimateDiff::Runner.generate_baseline
 elsif options[:"new-only"]
-  CodeclimateDiff::Runner.run_diff_on_branch(options[:pattern], show_preexisting: false)
+  CodeclimateDiff::Runner.run_diff_on_branch(options[:pattern], always_analyze_all_files: options[:all], show_preexisting: false)
 else
-  CodeclimateDiff::Runner.run_diff_on_branch(options[:pattern], show_preexisting: true)
+  CodeclimateDiff::Runner.run_diff_on_branch(options[:pattern], always_analyze_all_files: options[:all], show_preexisting: true)
 end

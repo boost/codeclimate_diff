@@ -16,18 +16,34 @@ module CodeclimateDiff
       files_changed_str.split("\n")
     end
 
-    def self.calculate_issues_in_changed_files(changed_filenames)
+    def self.calculate_issues_in_changed_files(changed_filenames, always_analyze_all_files)
       changed_file_issues = []
 
-      changed_filenames.each do |filename|
-        next if filename == "codeclimate_diff.rb" # TODO: fix this file's code quality issues when we make a Gem!
+      threshold_to_run_on_all_files = CodeclimateDiff.configuration["threshold_to_run_on_all_files"] || 8
+      analyze_all_files = always_analyze_all_files || changed_filenames.count > threshold_to_run_on_all_files
+      if analyze_all_files
+        message = always_analyze_all_files ? "Analyzing all files..." : "The number of changed files is greater than the threshold '#{threshold_to_run_on_all_files}', so analyzing all files..."
+        puts message
 
-        puts "Analysing '#{filename}'..."
-        result = CodeclimateWrapper.new.run_codeclimate(filename)
+        result = CodeclimateWrapper.new.run_codeclimate
         JSON.parse(result).each do |issue|
           next if issue["type"] != "issue"
+          next unless changed_filenames.include? issue["location"]["path"]
 
           changed_file_issues.append(issue)
+        end
+
+      else
+        changed_filenames.each do |filename|
+          next if filename == "codeclimate_diff.rb" # TODO: fix this file's code quality issues when we make a Gem!
+
+          puts "Analysing '#{filename}'..."
+          result = CodeclimateWrapper.new.run_codeclimate(filename)
+          JSON.parse(result).each do |issue|
+            next if issue["type"] != "issue"
+
+            changed_file_issues.append(issue)
+          end
         end
       end
 
@@ -52,12 +68,12 @@ module CodeclimateDiff
       puts "Done!"
     end
 
-    def self.run_diff_on_branch(pattern, show_preexisting: true)
+    def self.run_diff_on_branch(pattern, always_analyze_all_files: false, show_preexisting: true)
       CodeclimateWrapper.new.pull_latest_image
 
       changed_filenames = calculate_changed_filenames(pattern)
 
-      changed_file_issues = calculate_issues_in_changed_files(changed_filenames)
+      changed_file_issues = calculate_issues_in_changed_files(changed_filenames, always_analyze_all_files)
 
       preexisting_issues = calculate_preexisting_issues_in_changed_files(changed_filenames)
 

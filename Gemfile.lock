@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    codeclimate_diff (0.1.3)
+    codeclimate_diff (0.1.4)
       colorize
       json
       optparse

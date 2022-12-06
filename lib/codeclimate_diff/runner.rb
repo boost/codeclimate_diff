@@ -14,6 +14,7 @@ module CodeclimateDiff
       branch_name = CodeclimateDiff.configuration["main_branch_name"] || "main"
       files_changed_str = `git diff --name-only #{branch_name} | grep --invert-match spec/ | grep --extended-regexp '.js$|.rb$'#{extra_grep_filter}`
       files_changed_str.split("\n")
+                       .filter { |filename| File.exist?(filename) }
     end
 
     def self.calculate_issues_in_changed_files(changed_filenames, always_analyze_all_files)

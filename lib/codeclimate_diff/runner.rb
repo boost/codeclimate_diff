@@ -2,6 +2,7 @@
 
 require "json"
 require "colorize"
+require "pry-byebug"
 require_relative "./codeclimate_wrapper"
 require_relative "./result_printer"
 require_relative "./issue_sorter"

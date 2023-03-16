@@ -1,0 +1,16 @@
+---
+version: "2"
+plugins:
+  rubocop:
+    enabled: true
+    channel: rubocop-1-36-0
+  reek:
+    enabled: true
+
+checks:
+  method-complexity:
+    config:
+      threshold: 10  # defaults to 5. Cognitive complexity rather than cyclomatic complexity
+
+exclude_patterns:
+  - "**/spec/"

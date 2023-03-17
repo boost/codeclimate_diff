@@ -14,4 +14,3 @@ checks:
 
 exclude_patterns:
   - "**/spec/"
-  - "lib/codeclimate_diff/runner.rb" # just testing

@@ -55,8 +55,6 @@ module CodeclimateDiff
 
       else
         changed_filenames.each do |filename|
-          next if filename == "codeclimate_diff.rb" # TODO: fix this file's code quality issues when we make a Gem!
-
           puts "Analysing '#{filename}'..."
           result = CodeclimateWrapper.new.run_codeclimate(filename)
           JSON.parse(result).each do |issue|

@@ -27,12 +27,12 @@ module CodeclimateDiff
       files_and_directories_excluded = exclude_patterns.map { |exclude_pattern| Dir.glob(exclude_pattern) }.flatten
 
       # filter out any files that match the excluded ones
-      all_files_changed.map do |filename|
+      all_files_changed.filter do |filename|
         next if files_and_directories_excluded.include? filename
 
         next if files_and_directories_excluded.any? { |excluded_filename| filename.start_with?(excluded_filename) }
 
-        filename
+        true
       end
     end
 

@@ -2,6 +2,7 @@
 
 require "json"
 require "colorize"
+require "pry-byebug"
 require_relative "./codeclimate_wrapper"
 require_relative "./result_printer"
 require_relative "./issue_sorter"
@@ -12,9 +13,27 @@ module CodeclimateDiff
     def self.calculate_changed_filenames(pattern)
       extra_grep_filter = pattern ? " | grep '#{pattern}'" : ""
       branch_name = CodeclimateDiff.configuration["main_branch_name"] || "main"
-      files_changed_str = `git diff --name-only #{branch_name} | grep --invert-match spec/ | grep --extended-regexp '.js$|.rb$'#{extra_grep_filter}`
-      files_changed_str.split("\n")
-                       .filter { |filename| File.exist?(filename) }
+      all_files_changed_str = `git diff --name-only #{branch_name} | grep --extended-regexp '.js$|.rb$'#{extra_grep_filter}`
+      all_files_changed = all_files_changed_str.split("\n")
+                                               .filter { |filename| File.exist?(filename) }
+
+      # load the exclude patterns list from .codeclimate.yml
+      exclude_patterns = []
+      if File.exist?(".codeclimate.yml")
+        config = YAML.load_file(".codeclimate.yml")
+        exclude_patterns = config["exclude_patterns"]
+      end
+
+      files_and_directories_excluded = exclude_patterns.map { |exclude_pattern| Dir.glob(exclude_pattern) }.flatten
+
+      # filter out any files that match the excluded ones
+      all_files_changed.filter do |filename|
+        next if files_and_directories_excluded.include? filename
+
+        next if files_and_directories_excluded.any? { |excluded_filename| filename.start_with?(excluded_filename) }
+
+        true
+      end
     end
 
     def self.calculate_issues_in_changed_files(changed_filenames, always_analyze_all_files)
@@ -36,8 +55,6 @@ module CodeclimateDiff
 
       else
         changed_filenames.each do |filename|
-          next if filename == "codeclimate_diff.rb" # TODO: fix this file's code quality issues when we make a Gem!
-
           puts "Analysing '#{filename}'..."
           result = CodeclimateWrapper.new.run_codeclimate(filename)
           JSON.parse(result).each do |issue|

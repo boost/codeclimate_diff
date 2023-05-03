@@ -82,7 +82,7 @@ It runs the https://hub.docker.com/r/codeclimate/codeclimate docker image under 
             enabled: false
       ```
 
-4. Add a `.codecimate_diff.yml` configuration file
+4. Add a `.codeclimate_diff.yml` configuration file
       ```
       main_branch_name: master # defaults to main
       threshold_to_run_on_all_files: 8  # when you reach a certain number of files changed, it becomes faster to analyze all files rather than analyze them one by one.
@@ -93,7 +93,7 @@ It runs the https://hub.docker.com/r/codeclimate/codeclimate docker image under 
     Add this line to your application's Gemfile:
 
     ```ruby
-    gem 'codeclimate_diff'
+    gem 'codeclimate_diff', github: 'boost/codeclimate_diff'
     ```
 
     Install the gem:

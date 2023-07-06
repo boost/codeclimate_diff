@@ -5,13 +5,17 @@ require "colorize"
 
 module CodeclimateDiff
   class CodeclimateWrapper
+
     def run_codeclimate(filename = "")
+      docker_platform = CodeclimateDiff.configuration["docker_platform"] || "linux/amd64"
+
       `docker run \
         --interactive --tty --rm \
         --env CODECLIMATE_CODE="$PWD" \
         --volume "$PWD":/code \
         --volume /var/run/docker.sock:/var/run/docker.sock \
         --volume /tmp/cc:/tmp/cc \
+        --platform #{docker_platform} \
         codeclimate/codeclimate analyze -f json #{filename}`
     end
 

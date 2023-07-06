@@ -1,2 +1,4 @@
 main_branch_name: main
 threshold_to_run_on_all_files: 10
+# For ARM based processors, use linux/x86_64
+docker_platform: linux/amd64

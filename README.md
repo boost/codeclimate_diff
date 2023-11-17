@@ -57,6 +57,9 @@ It runs the https://hub.docker.com/r/codeclimate/codeclimate docker image under 
         TooManyStatements:
           max_statements: 10  # defaults to 5.  You want this number realistic but stretchy so we can move it down
 
+        UtilityFunction:
+          public_methods_only: true
+
       directories:
         "app/controllers":
           IrresponsibleModule:

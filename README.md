@@ -60,6 +60,10 @@ It runs the https://hub.docker.com/r/codeclimate/codeclimate docker image under 
         UtilityFunction:
           public_methods_only: true
 
+        UncommunicativeVariableName:
+          accept:
+            - e
+
       directories:
         "app/controllers":
           IrresponsibleModule:

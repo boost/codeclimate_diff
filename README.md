@@ -51,6 +51,12 @@ It runs the https://hub.docker.com/r/codeclimate/codeclimate docker image under 
         IrresponsibleModule:
           enabled: false
 
+        NilCheck:
+          enabled: false
+
+        ManualDispatch:
+          enabled: false
+
         LongParameterList:
           max_params: 4  # defaults to 3.  You want this number realistic but stretchy so we can move it down
 

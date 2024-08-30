@@ -86,8 +86,29 @@ module CodeclimateDiff
       puts "Done!"
     end
 
+    def self.setup_baseline_for_branch
+      main_branch = CodeclimateDiff.configuration["main_branch_name"] || "main"
+
+      project_repo = `basename $(pwd)`.strip
+
+      puts "Creating a temp worktree to generate the baseline..."
+      system("git worktree add ../temp-codeclimate #{main_branch}")
+
+      Dir.chdir("../temp-codeclimate") do
+        # Execute shell command in the '../temp-codeclimate' directory
+        generate_baseline
+
+        puts "Copying the baseline to #{project_repo}..."
+        system("cp codeclimate_diff_baseline.json ../#{project_repo}")
+      end
+
+      puts("Removing the temp worktree...")
+      system("git worktree remove ../temp-codeclimate")
+    end
+
     def self.run_diff_on_branch(pattern, always_analyze_all_files: false, show_preexisting: true)
-      CodeclimateWrapper.new.pull_latest_image
+      # CodeclimateWrapper.new.pull_latest_image
+      setup_baseline_for_branch
 
       changed_filenames = calculate_changed_filenames(pattern)
 

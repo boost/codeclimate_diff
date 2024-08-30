@@ -95,7 +95,6 @@ module CodeclimateDiff
       system("git worktree add ../temp-codeclimate #{main_branch}")
 
       Dir.chdir("../temp-codeclimate") do
-        # Execute shell command in the '../temp-codeclimate' directory
         generate_baseline
 
         puts "Copying the baseline to #{project_repo}..."
@@ -107,8 +106,7 @@ module CodeclimateDiff
     end
 
     def self.run_diff_on_branch(pattern, always_analyze_all_files: false, show_preexisting: true)
-      # CodeclimateWrapper.new.pull_latest_image
-      setup_baseline_for_branch
+      setup_baseline_for_branch unless File.exist?("codeclimate_diff_baseline.json")
 
       changed_filenames = calculate_changed_filenames(pattern)
 

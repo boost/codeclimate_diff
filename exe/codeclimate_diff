@@ -23,10 +23,10 @@ OptionParser.new do |opts|
           "Grep pattern to filter files.  If provided, will filter the files changed on your branch further.")
 end.parse!(into: options)
 
-if options[:baseline]
-  CodeclimateDiff::Runner.generate_baseline
-elsif options[:"new-only"]
-  CodeclimateDiff::Runner.run_diff_on_branch(options[:pattern], always_analyze_all_files: options[:all], show_preexisting: false)
+if options[:"new-only"]
+  CodeclimateDiff::Runner.run_diff_on_branch(options[:pattern], always_analyze_all_files: options[:all],
+                                                                show_preexisting: false)
 else
-  CodeclimateDiff::Runner.run_diff_on_branch(options[:pattern], always_analyze_all_files: options[:all], show_preexisting: true)
+  CodeclimateDiff::Runner.run_diff_on_branch(options[:pattern], always_analyze_all_files: options[:all],
+                                                                show_preexisting: true)
 end

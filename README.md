@@ -120,15 +120,12 @@ It runs the https://hub.docker.com/r/codeclimate/codeclimate docker image under 
         $ bundle binstubs codeclimate_diff
 
 
-6. Run the baseline and commit the result to the repo
+    Add codeclimate_diff_baseline.json to .gitignore
 
-    ```
-    ./bin/codeclimate_diff --baseline
-    ```
 
 ## Usage
 
-1. Create a feature branch for your work, and reset the baseline + commit (5 mins)
+1. Create a feature branch for your work
 
 2. Do some work
 
@@ -137,7 +134,7 @@ It runs the https://hub.docker.com/r/codeclimate/codeclimate docker image under 
     ```bash
     # runs on each file changed in your branch (about 10 secs per code file changed on your branch)
     ./bin/codeclimate_diff
-
+    # baseline is now generated on first run, to generate new baseline, delete the existing.
     OR
 
     # filters the changed files in your branch futher by a grep pattern

@@ -18,7 +18,7 @@ module CodeclimateDiff
         --platform #{docker_platform} \
         codeclimate/codeclimate analyze -f json #{filename}`
 
-      output.gsub(/.*?(?=\[{)/im, "") # remove everything before the first json object (ie WARNINGS)
+      output.gsub(/.*?(?=^\[{)/im, "") # remove everything before the first json object (ie WARNINGS)
     end
 
     def pull_latest_image

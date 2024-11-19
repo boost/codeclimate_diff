@@ -9,7 +9,7 @@ module CodeclimateDiff
     def run_codeclimate(filename = "")
       docker_platform = CodeclimateDiff.configuration["docker_platform"] || "linux/amd64"
 
-      `docker run \
+      output = `docker run \
         --interactive --tty --rm \
         --env CODECLIMATE_CODE="$PWD" \
         --volume "$PWD":/code \
@@ -17,6 +17,8 @@ module CodeclimateDiff
         --volume /tmp/cc:/tmp/cc \
         --platform #{docker_platform} \
         codeclimate/codeclimate analyze -f json #{filename}`
+
+      output.gsub(/.*?(?=\[{)/im, "") # remove everything before the first json object (ie WARNINGS)
     end
 
     def pull_latest_image
